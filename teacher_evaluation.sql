@@ -342,3 +342,58 @@ ON teachers(name);
 CREATE INDEX idx_evaluation_date 
 ON evaluation(date);
 
+-- Like Clause
+-- 39. Selecting students whose name starts with 'J'
+SELECT * 
+FROM students 
+WHERE name LIKE 'J%';
+
+-- 40. Selecting teachers whose email contains 'example.com'
+SELECT * 
+FROM teachers 
+WHERE email LIKE '%example.com%';
+
+-- 41. Selecting evaluations with grade starting with 'A'
+SELECT *
+FROM evaluation 
+WHERE grade LIKE 'A%';
+
+-- 42. Selecting classes whose name ends with 'ics'
+SELECT * 
+FROM classes 
+WHERE class_name LIKE '%ics';
+
+-- 43. Selecting departments whose name contains 'Service'
+SELECT * 
+FROM departments 
+WHERE department_name LIKE '%Service%';
+
+-- Advance queries
+-- 44. Retrieve all evaluations for a specific teacher
+SELECT e.*, s.name AS student_name, t.name AS teacher_name
+FROM evaluation as e
+INNER JOIN students as s ON e.student_id = s.student_id
+INNER JOIN teachers as t ON e.teacher_id = t.teacher_id
+WHERE t.name = 'Ms. Johnson';
+
+-- 45. Retrieve the average grade given by each teacher
+SELECT t.name AS teacher_name, AVG(grade) AS average_grade
+FROM evaluation as e
+INNER JOIN teachers as t ON e.teacher_id = t.teacher_id
+GROUP BY t.name;
+
+-- 46. Find the teacher with the highest number of evaluations
+SELECT t.name AS teacher_name, COUNT(*) AS num_evaluations
+FROM evaluation as e
+INNER JOIN teachers as t ON e.teacher_id = t.teacher_id
+GROUP BY t.name
+ORDER BY num_evaluations DESC
+LIMIT 1;
+
+-- 47. Retrieve the top-performing student (highest average grade)
+SELECT s.name AS student_name, AVG(grade) AS average_grade
+FROM evaluation as e
+INNER JOIN students as s ON e.student_id = s.student_id
+GROUP BY s.name
+ORDER BY average_grade DESC
+LIMIT 1;
