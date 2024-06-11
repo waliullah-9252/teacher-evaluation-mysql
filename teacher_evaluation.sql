@@ -1,6 +1,7 @@
 -- create a database with teacher evaluation
 create database Teacher_Evaluation;
 
+-- database activation
 use Teacher_Evaluation;
 
 -- 1. Create students table with proper constraints
